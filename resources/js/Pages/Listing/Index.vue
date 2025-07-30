@@ -1,10 +1,10 @@
 <template>
     <h1>{{text}}</h1>
-    <listing-address :listings="listings"></listing-address>
+    <listing :listings="listings"></listing>
 </template>
 
 <script setup>
-    import ListingAddress from "../../Components/ListingAddress.vue";
+    import Listing from "../../Components/Listing.vue";
     import {ref} from "vue";
     import MainLayout from "../../Layouts/MainLayout.vue";
     import {Link} from "@inertiajs/vue3";
