@@ -9,3 +9,29 @@
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
 }
+
+@layer components {
+
+    .input-field {
+        @apply w-full border bg-transparent text-inherit rounded px-2 py-1;
+        @apply border-black dark:border-white; /* default light mode */
+    }
+
+    .btn-primary {
+        @apply mt-1 text-white bg-indigo-500 p-2 rounded-md
+    }
+
+    .input-error {
+        @apply text-sm text-red-500 dark:text-red-400;
+    }
+
+    .form-label-error {
+        @apply text-red-500 dark:text-red-400;
+    }
+
+    .input-field-error {
+        @apply w-full border bg-transparent text-inherit rounded px-2 py-1;
+        @apply border-red-500 dark:border-red-400; /* default light mode */
+    }
+}
+

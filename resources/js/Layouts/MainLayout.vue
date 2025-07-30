@@ -6,7 +6,7 @@
                 <div><Link href="/">Homepage</Link></div>
                 <div><Link href="/show">Show</Link></div>
                 <div><Link :href="route('listings.index')">Listings</Link></div>
-                <div class="bg-indigo-600 hover:bg-indigo-500 text-white p-2 rounded-md"><Link :href="route('listings.create')">+ Create</Link></div>
+                <div class="btn-primary"><Link :href="route('listings.create')">+ Create</Link></div>
             </nav>
         </div>
     </header>
