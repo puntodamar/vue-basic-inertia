@@ -1,5 +1,6 @@
 <template>
     <form @submit.prevent="props.submit({...form})">
+        <flash-message></flash-message>
 <!--        <div v-if="errors">-->
 <!--            <ul>-->
 <!--                <li v-for="err in errors" :key="err">{{err}}</li>-->
@@ -82,6 +83,7 @@
 
 <script setup>
     import {useForm} from "@inertiajs/vue3";
+    import FlashMessage from "./UI/FlashMessage.vue";
 
     const props =  defineProps({
         errors: {

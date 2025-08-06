@@ -24,7 +24,7 @@
                 <template #header>
                     Monthly Payment
                 </template>
-                <div class="flex flex-col space-y-1 max-w-sm">
+                <div class="flex flex-col space-y-1">
                     <label for="interestRate">Interest Rate ({{interestRate}}%)</label>
                     <input
                         v-model.number="interestRate"
@@ -37,7 +37,7 @@
                     />
                 </div>
 
-                <div class="flex flex-col space-y-1 max-w-sm mt-4">
+                <div class="flex flex-col space-y-1 mt-4">
                     <label for="duration">Duration ({{duration}} years)</label>
                     <input
                         v-model.number="duration"
