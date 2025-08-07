@@ -3,7 +3,7 @@ import { createInertiaApp } from '@inertiajs/vue3'
 import MainLayout from "./Layouts/MainLayout.vue";
 import {ZiggyVue } from 'ziggy-js';
 import {Link} from "@inertiajs/vue3"
-
+import {store} from './vuex.js';
 
 createInertiaApp({
     resolve: async name => {
@@ -15,6 +15,7 @@ createInertiaApp({
     setup({ el, App, props, plugin }) {
         createApp({ render: () => h(App, props) })
             .use(plugin, ZiggyVue)
+            .use(store)
             .component('the-link', Link)
             .mount(el)
 

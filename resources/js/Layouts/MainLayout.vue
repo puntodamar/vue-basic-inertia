@@ -7,8 +7,8 @@
                 <div><the-link href="/show">Show</the-link></div>
                 <div><the-link :href="route('listings.index')">Listings</the-link></div>
 
-                <div v-if="user" class="flex items-center gap-4">
-                    <div class="text-sm text-gray-500">{{user.name}}</div>
+                <div v-if="store.state.user" class="flex items-center gap-4">
+                    <div class="text-sm text-gray-500">{{store.state.user.name}}</div>
                     <the-link :href="route('listings.create')" class="btn-primary">+ Create</the-link>
                     <the-link :href="route('logout')" method="delete">Logout</the-link>
                 </div>
@@ -33,13 +33,16 @@
 
 <script setup>
 import {computed, ref} from "vue";
-    import {Link, usePage} from "@inertiajs/vue3"
+    import {usePage} from "@inertiajs/vue3"
     import {route} from "ziggy-js";
-import FlashMessage from "../Components/UI/FlashMessage.vue";
-
+    import FlashMessage from "../Components/UI/FlashMessage.vue";
+    import {store} from "../vuex.js";
 
     const page = usePage()
     const counter = ref(0)
+
     const user = computed(() => page.props.user)
+    store.commit('setUser', user)
+
     setInterval(() => ref(counter.value++), 1000)
 </script>
