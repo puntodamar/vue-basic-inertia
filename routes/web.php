@@ -5,21 +5,18 @@ use App\Http\Controllers\ListingController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\IndexController;
 
-//Route::get('/', function () {
-//    return inertia('Index');
-////    return view('app');
-//});
-
 Route::get('/', [IndexController::class, 'index']);
 Route::get('/show', [IndexController::class, 'show']);
 
-//Route::resource('listings', ListingController::class)->only(['index', 'show']);
-Route::resource('listings', ListingController::class);
+
+Route::middleware(['custom.auth:user'])->group(function () {
+    Route::resource('listings', ListingController::class)->only(['create', 'store','destroy', 'edit']);
+    Route::resource('listings', ListingController::class)->only(['index', 'show'])->withoutMiddleware(['custom.auth:user']);
+});
+
 
 Route::get('login', [AuthController::class, 'create'])->name('login');
 Route::post('login', [AuthController::class, 'store'])->name('login.store');
 Route::delete('logout', [AuthController::class, 'destroy'])->name('logout');
 
-Route::middleware(['custom.auth:user'])->group(function () {
-    Route::resource('listings', ListingController::class)->only(['create', 'store','destroy', 'edit']);
-});
+

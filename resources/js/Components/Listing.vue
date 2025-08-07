@@ -7,27 +7,20 @@
                 <listing-item :listing="list"></listing-item>
             </the-link>
             <br/>
-            <div class="flex space-x-2">
-                <the-link :href="route('listings.edit', list.id)" method="get">
-                    <div class="mt-1 text-white p-2 rounded-md">Edit</div>
-                </the-link>
-                <the-link :href="route('listings.destroy', list.id)" method="delete">
-                    <div class="mt-1 text-white bg-red-800 p-2 rounded-md">Delete</div>
-                </the-link>
-            </div>
 
+            <div v-if="store.state.user">
+                <div class="flex space-x-2">
+                    <the-link :href="route('listings.edit', list.id)" method="get" class="mt-1 text-white p-2 rounded-md">
+                        Edit
+                    </the-link>
+                    <the-link :href="route('listings.destroy', list.id)" method="delete" class="mt-1 text-white bg-red-800 p-2 rounded-md hover:cursor-pointer">
+                        Delete
+                    </the-link>
+                </div>
+            </div>
 
         </the-box>
     </div>
-
-
-<!--    <div>-->
-<!--        <ul>-->
-<!--            <li v-for="list in listings" :key="list.id">-->
-<!--                <the-link :href="route('listings.show', list.id)">{{list.street}}</the-link>&nbsp; <the-link :href="route('listings.destroy', list.id)" method="delete">DELETE</the-link>-->
-<!--            </li>-->
-<!--        </ul>-->
-<!--    </div>-->
 </template>
 <script setup>
 
@@ -36,6 +29,7 @@
 
     import ListingItem from "./ListingItem.vue";
     import FlashMessage from "./UI/FlashMessage.vue";
+    import {store} from "../vuex.js";
 
     const props = defineProps({
         listings: {type: Array, required: true},

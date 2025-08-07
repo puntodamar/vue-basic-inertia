@@ -14,15 +14,14 @@ class CustomAuth
      */
     public function handle(Request $request, Closure $next, string $guard = 'user')
     {
-        if (Auth::guard($guard)->guest()) {
-            // pick the login route based on guard if you like:
-            $loginRoute = $guard === 'admin' ? 'admin.login' : 'login';
-
+        if (Auth::check()) {
+            return $next($request);
+        } else {
             return redirect()
-                ->route($loginRoute)
+                ->route('login')
                 ->with('error', 'You must be logged in to access that page.');
         }
 
-        return $next($request);
+
     }
 }

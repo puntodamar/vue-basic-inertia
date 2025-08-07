@@ -51,7 +51,7 @@ class ListingController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(ListingRequest $request, Listing $listing): \Illuminate\Http\RedirectResponse
+    public function update(ListingRequest $request, Listing $listing)
     {
         $listing->update($request->validated());
         return to_route('listings.show', ['listing' => $listing])->with('success', 'Data Updated');
