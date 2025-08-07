@@ -2,6 +2,7 @@
     <form @submit.prevent="login">
 
         <div class="w-1/4 mx-auto">
+            <flash-message></flash-message>
             <div>
                 <label for="email">Email</label>
                 <input id="email" type="email" class="input-field" v-model="form.email">

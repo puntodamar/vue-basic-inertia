@@ -1,5 +1,7 @@
 <template>
+    <flash-message></flash-message>
     <div class="grid gap-4 grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
+
         <the-box v-for="list in listings" :key="list.id">
             <the-link :href="route('listings.show', list.id)">
                 <listing-item :listing="list"></listing-item>
@@ -33,6 +35,7 @@
     import TheBox from "./UI/TheBox.vue";
 
     import ListingItem from "./ListingItem.vue";
+    import FlashMessage from "./UI/FlashMessage.vue";
 
     const props = defineProps({
         listings: {type: Array, required: true},

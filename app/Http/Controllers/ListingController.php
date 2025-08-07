@@ -9,9 +9,7 @@ use Illuminate\Support\Facades\Auth;
 
 class ListingController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index()
     {
         return inertia("Listing/Index", ["listings" => Listing::all()]);

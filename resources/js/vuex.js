@@ -10,7 +10,7 @@ const store = createStore({
     mutations: {
         setUser (state, user) {
             state.user = user
-        }
+        },
     },
     getters: {
         user (state) {

@@ -1,26 +1,26 @@
 <?php
-
 namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Symfony\Component\HttpFoundation\Response;
 
 class CustomAuth
 {
     /**
-     * Handle an incoming request.
-     *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Closure  $next
+     * @param  string    $guard   // this is your middleware param: 'user' or 'admin'
      */
-    public function handle(Request $request, Closure $next, $guard = 'user')
+    public function handle(Request $request, Closure $next, string $guard = 'user')
     {
         if (Auth::guard($guard)->guest()) {
-            // Redirect to your admin login, with a flash error
+            // pick the login route based on guard if you like:
+            $loginRoute = $guard === 'admin' ? 'admin.login' : 'login';
+
             return redirect()
-                ->route($guard.".login")
-                ->with('error', 'Please login to continue.');
+                ->route($loginRoute)
+                ->with('error', 'You must be logged in to access that page.');
         }
 
         return $next($request);

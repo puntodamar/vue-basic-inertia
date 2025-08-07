@@ -37,9 +37,14 @@ class AuthController extends Controller
     }
 
     public function destroy(Request $request) {
-        Auth::logout();
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-        return redirect(route('listings.index'))->with('success', "You have been logged out.");
+        if (Auth::check()) {
+            Auth::logout();
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+            return redirect(route('listings.index'))->with('success', "You have been logged out.");
+        } else {
+            return redirect(route('listings.index'));
+        }
+
     }
 }

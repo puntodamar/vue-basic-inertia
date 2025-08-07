@@ -45,6 +45,7 @@ class HandleInertiaRequests extends Middleware
             'user' => Auth::check() ? [
                 'id' => Auth::user()->id,
                 'name' => Auth::user()->name,
+                'auth_type' => auth('admin')->check() ? 'admin' : 'user'
             ] : null,
             'csrf_token' => csrf_token(),
         ]);
