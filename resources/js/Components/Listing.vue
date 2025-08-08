@@ -8,7 +8,7 @@
             </the-link>
             <br/>
 
-            <div v-if="store.state.user">
+            <div v-if="list.owner_id === store.state.user.id">
                 <div class="flex space-x-2">
                     <the-link :href="route('listings.edit', list.id)" method="get" class="mt-1 text-white p-2 rounded-md">
                         Edit

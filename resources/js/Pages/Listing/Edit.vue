@@ -1,5 +1,10 @@
 <template>
-    <listing-form :submit="edit" :listing="listing" :errors="errors" button="Edit"></listing-form>
+    <listing-form
+        @submit="form.patch(`/listings/${props.listing.id}`)"
+        :form="form"
+        :errors="errors"
+        button="Edit">
+    </listing-form>
 </template>
 
 <script setup>
@@ -10,9 +15,4 @@
     const props = defineProps(['listing'])
     let form = useForm({...props.listing});
     const errors = computed(() => form.errors)
-
-    const edit = (formData) => {
-        Object.assign(form, formData)
-        form.patch(`/listings/${props.listing.id}`)
-    }
 </script>

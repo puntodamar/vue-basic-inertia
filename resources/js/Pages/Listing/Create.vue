@@ -1,20 +1,30 @@
 <template>
-    <listing-form :listing="{}" :submit="create" :errors="errors"></listing-form>
+    <listing-form :form="form" :errors="form.errors" @submit="create"></listing-form>
 </template>
 
 <script setup>
     import ListingForm from "../../Components/ListingForm.vue";
     import {useForm} from "@inertiajs/vue3";
-    import {computed} from "vue";
+    import {store} from "../../vuex.js";
 
-    let form = useForm({});
-    const errors = computed(() => form.errors)
-
-    const create = (formData) => {
-        console.log('submit called on parent')
-        form.value = formData.value
-        form.post('/listings')
-        console.log(form.errors)
+    const listing = {
+        owner_id: store.state.user.id,
+        beds: null,
+        baths: null,
+        area: null,
+        city: null,
+        code: null,
+        street: null,
+        street_number: null,
+        price: null
     }
+
+    const form = useForm(listing);
+
+    const create = () => {
+        console.table(form.data())
+        form.post('/listings')
+    }
+
 </script>
 

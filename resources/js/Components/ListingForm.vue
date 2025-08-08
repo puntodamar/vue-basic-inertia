@@ -1,5 +1,5 @@
 <template>
-    <form @submit.prevent="props.submit({...form})">
+    <form @submit.prevent="emit('submit')">
         <flash-message></flash-message>
 <!--        <div v-if="errors">-->
 <!--            <ul>-->
@@ -82,29 +82,22 @@
 
 
 <script setup>
-    import {useForm} from "@inertiajs/vue3";
     import FlashMessage from "./UI/FlashMessage.vue";
+    const emit = defineEmits(['submit'])
 
     const props =  defineProps({
         errors: {
             type: Object,
             required: false,
         },
-        listing: {
+        form: {
             type: Object,
             required: true,
-        },
-        submit: {
-            type: Function,
-            required: true
         },
         button: {
             type: String,
             required: false
         }
     })
-
-    const form = useForm(props.listing)
-
 </script>
 

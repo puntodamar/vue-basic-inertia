@@ -12,7 +12,7 @@ class ListingController extends Controller
 
     public function index()
     {
-        return inertia("Listing/Index", ["listings" => Listing::all()]);
+        return inertia("Listing/Index", ["listings" => Listing::with('owner')->orderByDesc('created_at')->get()]);
     }
 
     /**
@@ -28,8 +28,13 @@ class ListingController extends Controller
      */
     public function store(ListingRequest $request)
     {
-        Listing::create($request->validated());
-        return to_route('listings.index')->with('success', 'flash with to_route');
+        $listing = Listing::create(
+            $request->safe()->merge(['owner_id' => Auth::id()])->all()
+        );
+
+//        $listing = $request->user()->listings()->create($request->validated());
+
+        return to_route('listings.show', ['listing' => $listing])->with('success', 'Listing created');
     }
 
     /**
@@ -54,7 +59,7 @@ class ListingController extends Controller
     public function update(ListingRequest $request, Listing $listing)
     {
         $listing->update($request->validated());
-        return to_route('listings.show', ['listing' => $listing])->with('success', 'Data Updated');
+        return redirect()->route('listings.edit', ['listing' => $listing])->with('success', 'Listing updated');
     }
 
     /**
@@ -62,7 +67,12 @@ class ListingController extends Controller
      */
     public function destroy(Listing $listing)
     {
-        $listing->delete();
-        return to_route('listings.index')->with('success', 'Data Deleted');
+        if ($listing->owner_id === Auth::id()) {
+            $listing->delete();
+            return to_route('listings.index')->with('success', 'Data Deleted');
+        } else {
+            return to_route('listings.index')->with('error', '401 Unauthorized');
+        }
+
     }
 }

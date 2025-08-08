@@ -22,6 +22,7 @@ class ListingRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'owner_id' => 'required|exists:users,id',
             'beds' => 'required|integer|min:0',
             'price' => 'required|numeric|min:0',
             'street' => 'required|string|max:255',

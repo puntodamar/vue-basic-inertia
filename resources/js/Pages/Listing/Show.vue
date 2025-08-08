@@ -1,4 +1,5 @@
 <template>
+    <flash-message></flash-message>
     <div class="flex flex-col md:grid grid-cols-12 gap-4">
         <the-box class="col-span-12 md:col-span-6">
             <img src="https://www.agentadvice.com/wp-content/uploads/2020/12/shutterstock_1247473441-scaled.jpg" alt="image">
@@ -84,6 +85,7 @@
     import TheBox from "../../Components/UI/TheBox.vue";
     import {ref} from "vue";
     import {useMonthlyPayment} from "../../Composables/useMonthlyPayment";
+    import FlashMessage from "../../Components/UI/FlashMessage.vue";
     const props = defineProps(['listing'])
 
     const interestRate = ref(2.5)
