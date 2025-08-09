@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ListingController;
 use App\Http\Controllers\UserController;
+use App\Models\Listing;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\IndexController;
 
@@ -12,9 +13,15 @@ Route::get('/show', [IndexController::class, 'show']);
 
 Route::middleware(['custom.auth:user'])->group(function () {
 
-    Route::resource('listings', ListingController::class)->only(['create', 'store','destroy', 'edit']);
-    Route::resource('listings', ListingController::class)->only(['index', 'show'])->withoutMiddleware(['custom.auth:user']);
-    Route::patch('listings/{listing}', [ListingController::class, 'update'])->name('listings.update');
+    Route::resource('listings', ListingController::class)
+        ->only(['create', 'store','destroy', 'edit']);
+
+    Route::resource('listings', ListingController::class)
+        ->only(['index', 'show'])
+        ->withoutMiddleware(['custom.auth:user']);
+
+    Route::patch('listings/{listing}', [ListingController::class, 'update'])
+        ->name('listings.update');
 });
 
 

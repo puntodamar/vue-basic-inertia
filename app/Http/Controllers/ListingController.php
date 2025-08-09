@@ -4,15 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ListingRequest;
 use App\Models\Listing;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
+
 
 class ListingController extends Controller
 {
 
     public function index()
     {
-        return inertia("Listing/Index", ["listings" => Listing::with('owner')->orderByDesc('created_at')->get()]);
+        return inertia("Listing/Index", ["listings" => Listing::with('owner:id,name')->latest()->paginate(15)]);
     }
 
     /**
@@ -42,7 +43,9 @@ class ListingController extends Controller
      */
     public function show(Listing $listing)
     {
+
         return inertia("Listing/Show", ["listing" => $listing]);
+
     }
 
     /**
@@ -50,7 +53,13 @@ class ListingController extends Controller
      */
     public function edit(Listing $listing)
     {
-        return inertia("Listing/Edit", ["listing" => $listing]);
+        $response = Gate::inspect('update', $listing);
+
+        if ($response->allowed()) {
+            return inertia("Listing/Edit", ["listing" => $listing]);
+        } else {
+            return redirect()->route('listings.index')->with('error', $response->message());
+        }
     }
 
     /**
@@ -58,8 +67,14 @@ class ListingController extends Controller
      */
     public function update(ListingRequest $request, Listing $listing)
     {
-        $listing->update($request->validated());
-        return redirect()->route('listings.edit', ['listing' => $listing])->with('success', 'Listing updated');
+        $response = Gate::inspect('update', $listing);
+
+        if ($response->allowed()) {
+            $listing->update($request->validated());
+            return redirect()->route('listings.edit', ['listing' => $listing])->with('success', 'Listing updated');
+        } else {
+            return redirect()->route('listings.index')->with('error', $response->message());
+        }
     }
 
     /**
@@ -67,12 +82,15 @@ class ListingController extends Controller
      */
     public function destroy(Listing $listing)
     {
-        if ($listing->owner_id === Auth::id()) {
+        $response = Gate::inspect('update', $listing);
+
+        if ($response->allowed()) {
             $listing->delete();
-            return to_route('listings.index')->with('success', 'Data Deleted');
+            return to_route('listings.index')->with('success', 'Listing has been deleted successfully');
         } else {
-            return to_route('listings.index')->with('error', '401 Unauthorized');
+            return to_route('listings.index')->with('error', $response->message());
         }
 
     }
+
 }

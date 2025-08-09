@@ -1,6 +1,6 @@
 <template>
     <h1>{{text}}</h1>
-    <listing :listings="listings"></listing>
+    <listing :listings="listings.data"></listing>
 </template>
 
 <script setup>
@@ -10,8 +10,10 @@
 
     const text = ref("Hello from Listing")
     const props = defineProps({
-        listings: {type: Array, required: true},
+        listings: {type: Object, required: true},
     })
+
+    console.log(props.listings)
     defineOptions({
         layout: MainLayout
     })

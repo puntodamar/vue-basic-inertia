@@ -8,7 +8,7 @@
             </the-link>
             <br/>
 
-            <div v-if="list.owner_id === store.state.user.id">
+            <div v-if="eligibleToAlter(list.owner_id)">
                 <div class="flex space-x-2">
                     <the-link :href="route('listings.edit', list.id)" method="get" class="mt-1 text-white p-2 rounded-md">
                         Edit
@@ -30,8 +30,11 @@
     import ListingItem from "./ListingItem.vue";
     import FlashMessage from "./UI/FlashMessage.vue";
     import {store} from "../vuex.js";
+    import {computed} from "vue";
 
     const props = defineProps({
         listings: {type: Array, required: true},
     })
+
+    const eligibleToAlter  = (owner_id) => owner_id === store.state.user?.id || store.state.user?.is_admin
 </script>
