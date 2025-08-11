@@ -25,7 +25,6 @@
     const emit = defineEmits(["filterChanged"]);
     const formRefs = toRefs(props.form);
 
-    // Watch each field and debounce emit
     watch(
         Object.values(formRefs),
         debounce(() => {

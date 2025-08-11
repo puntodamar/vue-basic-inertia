@@ -43,7 +43,10 @@
     import Pagination from "../../Components/UI/Pagination.vue";
 
 
-    const form = reactive({ deleted: false, draft: false})
+    const form = reactive({
+        deleted: route().params.deleted === 'true', // true if exactly "true"
+        draft: route().params.draft === 'true'
+    })
 
     const props = defineProps({
         listings: Array,
