@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ListingController;
-use App\Http\Controllers\RealtorController;
+use App\Http\Controllers\RealtorListingController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\IndexController;
@@ -23,7 +23,7 @@ Route::middleware(['custom.auth:user'])->group(function () {
     Route::patch('listings/{listing}', [ListingController::class, 'update'])
         ->name('listings.update');
 
-    Route::resource('realtors', RealtorController::class);
+    Route::resource('realtors', RealtorListingController::class)->names('realtors.listings');
 });
 
 

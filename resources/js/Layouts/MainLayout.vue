@@ -8,7 +8,9 @@
                 <div><the-link :href="route('listings.index')">Listings</the-link></div>
 
                 <div v-if="store.state.user" class="flex items-center gap-4">
-                    <div class="text-sm text-gray-500">{{store.state.user.name}}</div>
+                    <div class="text-sm text-gray-500">
+                        <the-link :href="route('realtors.listings.index')">{{store.state.user.name}}</the-link>
+                    </div>
                     <the-link v-if="store.state.user" :href="route('listings.create')" class="btn-primary">+ Create</the-link>
                     <button type="button" class="hover:cursor-pointer" @click="logout">Logout</button>
                 </div>
@@ -36,7 +38,7 @@
 <script setup>
     import {computed, ref, watch} from "vue";
     import { Inertia } from '@inertiajs/inertia'
-    import {router, usePage} from "@inertiajs/vue3"
+    import {Link as TheLink, router, usePage} from "@inertiajs/vue3"
     import {route} from "ziggy-js";
     import {store} from "../vuex.js";
 

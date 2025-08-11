@@ -18,6 +18,7 @@ class ListingController extends Controller
         $listings =  Listing::with('owner:id,name')->latest()
             ->filter($request->only($allowed))->paginate(5)->withQueryString();
 
+
         return inertia("Listing/Index", [
             "listings" => $listings,
             "filters" => $request->only($allowed),
@@ -93,8 +94,8 @@ class ListingController extends Controller
         $response = Gate::inspect('update', $listing);
 
         if ($response->allowed()) {
-            $listing->delete();
-            return to_route('listings.index')->with('success', 'Listing has been deleted successfully');
+            $listing->deleteOrFail();
+            return to_route('realtors.index')->with('success', 'Listing has been deleted successfully');
         } else {
             return to_route('listings.index')->with('error', $response->message());
         }

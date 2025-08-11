@@ -7,12 +7,13 @@ use Illuminate\Database\Eloquent\Attributes\UsePolicy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use PhpParser\Builder;
 
 #[UsePolicy(ListingPolicy::class)]
 class Listing extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     public function owner(): BelongsTo
     {
@@ -29,6 +30,7 @@ class Listing extends Model
     ];
 
     public function scopeFilter($query, array $filters) {
+
         foreach ($filters as $field => $value) {
             if (!is_null($value) && $value !== '') {
 
@@ -49,7 +51,16 @@ class Listing extends Model
                     $query->where('area', '<=', $value);
                 }
 
-                else {
+                else if ($field == 'deleted' && $value === true) {
+                    $query->withTrashed();
+                }
+
+                else if ($field == 'draft') {
+                    $query->where('is_draft', $value);
+                }
+
+
+                else if ($field === 'beds' || $field === 'baths') {
                     if ($value == '6+') {
                         $query->where($field, '>=', 6);
                     } else {
@@ -57,8 +68,6 @@ class Listing extends Model
                     }
 
                 }
-
-
             }
         }
 

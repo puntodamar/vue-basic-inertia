@@ -8,16 +8,16 @@
             </the-link>
             <br/>
 
-            <div v-if="eligibleToAlter(list.owner_id)">
-                <div class="flex space-x-2">
-                    <the-link :href="route('listings.edit', list.id)" method="get" class="mt-1 text-white p-2 rounded-md">
-                        Edit
-                    </the-link>
-                    <the-link :href="route('listings.destroy', list.id)" method="delete" class="mt-1 text-white bg-red-800 p-2 rounded-md hover:cursor-pointer">
-                        Delete
-                    </the-link>
-                </div>
-            </div>
+<!--            <div v-if="eligibleToAlter(list.owner_id)">-->
+<!--                <div class="flex space-x-2">-->
+<!--                    <the-link :href="route('listings.edit', list.id)" method="get" class="mt-1 text-white p-2 rounded-md">-->
+<!--                        Edit-->
+<!--                    </the-link>-->
+<!--                    <the-link :href="route('listings.destroy', list.id)" method="delete" class="mt-1 text-white bg-red-800 p-2 rounded-md hover:cursor-pointer">-->
+<!--                        Delete-->
+<!--                    </the-link>-->
+<!--                </div>-->
+<!--            </div>-->
 
         </the-box>
     </div>
