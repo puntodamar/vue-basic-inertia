@@ -9,7 +9,7 @@
 
                 <div v-if="store.state.user" class="flex items-center gap-4">
                     <div class="text-sm text-gray-500">
-                        <the-link :href="route('realtors.listings.index')">{{store.state.user.name}}</the-link>
+                        <the-link :href="route('my-listings')">{{store.state.user.name}}</the-link>
                     </div>
                     <the-link v-if="store.state.user" :href="route('listings.create')" class="btn-primary">+ Create</the-link>
                     <button type="button" class="hover:cursor-pointer" @click="logout">Logout</button>

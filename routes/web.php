@@ -24,6 +24,7 @@ Route::middleware(['custom.auth:user'])->group(function () {
         ->name('listings.update');
 
     Route::resource('realtors', RealtorListingController::class)->names('realtors.listings');
+    Route::get('my-listings', [RealtorListingController::class, 'index'])->name('my-listings');
 });
 
 

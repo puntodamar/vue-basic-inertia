@@ -6,7 +6,7 @@
         <realtor-filter :form="form" @filterChanged="filterChanged"></realtor-filter>
     </section>
     <section class="grid grid-cols-1 lg:grid-cols-2 gap-2">
-        <the-box v-for="list in listings" :key="list.id">
+        <the-box v-for="list in listings.data" :key="list.id">
             <div class="flex flex-col md:flex-row gap-2 md:items-center justify-between">
                 <div>
                     <div class="xl:flex items-center gap-2">
@@ -25,6 +25,10 @@
             </div>
         </the-box>
     </section>
+    <div v-if="props.listings.data.length" class="w-full flex justify-center mt-4 mb-4" >
+        <pagination :links="props.listings.links"></pagination>
+    </div>
+
 </template>
 
 <script setup>
@@ -36,6 +40,7 @@
     import FlashMessage from "../../Components/UI/FlashMessage.vue";
     import RealtorFilter from "../../Components/UI/RealtorFilter.vue";
     import {reactive} from "vue";
+    import Pagination from "../../Components/UI/Pagination.vue";
 
 
     const form = reactive({ deleted: false, draft: false})
