@@ -6,9 +6,9 @@
         <realtor-filter :form="form" @filterChanged="filterChanged"></realtor-filter>
     </section>
     <section class="grid grid-cols-1 lg:grid-cols-2 gap-2">
-        <the-box v-for="list in listings.data" :key="list.id">
+        <the-box v-for="list in listings.data" :key="list.id" :class="{'border-dashed': list.deleted_at}">
             <div class="flex flex-col md:flex-row gap-2 md:items-center justify-between">
-                <div>
+                <div :class="{'opacity-25': list.deleted_at}">
                     <div class="xl:flex items-center gap-2">
                         <the-price :price="list.price" class="text-2xl font-medium"></the-price>
                         <listing-space :listing="list"></listing-space>
@@ -18,8 +18,10 @@
                 <div>
                     <div class="flex items-center gap-1 text-gray-600 dark:text-gray-300">
                         <the-link :href="route('listings.show', list.id)" class="btn-outline text-xs font-medium">Preview</the-link>
-                        <the-link :href="route('listings.edit', list.id)" class="btn-outline text-xs font-medium">Edit</the-link>
-                        <the-link :href="route('listings.destroy', list.id)" method="delete" class="btn-outline text-xs font-medium">Delete</the-link>
+                        <the-link v-if="!list.deleted_at" :href="route('listings.edit', list.id)" class="btn-outline text-xs font-medium">Edit</the-link>
+
+                        <the-link v-if="!list.deleted_at" :href="route('listings.destroy', list.id)" method="delete" class="btn-outline text-xs font-medium">Delete</the-link>
+                        <the-link v-else :href="route('realtors.listings.restore', list.id)" method="put" class="btn-outline text-xs font-medium">Restore</the-link>
                     </div>
                 </div>
             </div>
@@ -49,7 +51,7 @@
     })
 
     const props = defineProps({
-        listings: Array,
+        listings: Object,
     })
 
     const filterChanged = (filter) => {

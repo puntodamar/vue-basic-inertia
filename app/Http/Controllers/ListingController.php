@@ -67,9 +67,11 @@ class ListingController extends Controller
         if ($response->allowed()) {
             return inertia("Listing/Edit", ["listing" => $listing]);
         } else {
-            return redirect()->route('listings.index')->with('error', $response->message());
+            return redirect()->route('my-listings')->with('error', $response->message());
         }
     }
+
+
 
     /**
      * Update the specified resource in storage.
@@ -82,7 +84,7 @@ class ListingController extends Controller
             $listing->update($request->validated());
             return redirect()->route('listings.edit', ['listing' => $listing])->with('success', 'Listing updated');
         } else {
-            return redirect()->route('listings.index')->with('error', $response->message());
+            return redirect()->route('my-listings')->with('error', $response->message());
         }
     }
 
@@ -95,7 +97,7 @@ class ListingController extends Controller
 
         if ($response->allowed()) {
             $listing->deleteOrFail();
-            return to_route('realtors.index')->with('success', 'Listing has been deleted successfully');
+            return to_route('realtors.listings.index')->with('success', 'Listing has been deleted successfully');
         } else {
             return to_route('listings.index')->with('error', $response->message());
         }

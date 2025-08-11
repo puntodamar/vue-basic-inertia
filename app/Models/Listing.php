@@ -29,6 +29,10 @@ class Listing extends Model
         'owner_id', 'beds', 'price', 'street', 'street_number', 'baths', 'area', 'city', 'code'
     ];
 
+    public function scopeIsDeleted(Builder $query): bool {
+
+    }
+
     public function scopeFilter($query, array $filters) {
 
         foreach ($filters as $field => $value) {

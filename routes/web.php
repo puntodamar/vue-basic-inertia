@@ -20,10 +20,22 @@ Route::middleware(['custom.auth:user'])->group(function () {
         ->only(['index', 'show'])
         ->withoutMiddleware(['custom.auth:user']);
 
-    Route::patch('listings/{listing}', [ListingController::class, 'update'])
-        ->name('listings.update');
+    Route::prefix('listings')->name('listings.')->group(function () {
+        Route::patch('/{listing}', [ListingController::class, 'update'])
+            ->name('update');
+
+
+    });
+
+
 
     Route::resource('realtors', RealtorListingController::class)->names('realtors.listings');
+
+    Route::prefix('realtors')->name('realtors.')->group(function () {
+        Route::put('/{listing}/restore', [RealtorListingController::class, 'restore'])
+            ->name('listings.restore')->withTrashed();
+    });
+
     Route::get('my-listings', [RealtorListingController::class, 'index'])->name('my-listings');
 });
 

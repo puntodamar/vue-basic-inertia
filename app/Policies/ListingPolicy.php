@@ -42,7 +42,7 @@ class ListingPolicy
      */
     public function update(User $user, Listing $listing): Response
     {
-        return $listing->owner_id == $user->id || $user->is_admin  ? Response::allow() : Response::denyAsNotFound('Listing not found');
+        return ( $listing->owner_id == $user->id || $user->is_admin && !$listing->deleted_at)   ? Response::allow() : Response::denyAsNotFound('Listing not found');
     }
 
     /**
@@ -50,7 +50,7 @@ class ListingPolicy
      */
     public function delete(User $user, Listing $listing): Response
     {
-        return $listing->owner_id == $user->id || $user->is_admin   ? Response::allow() : Response::denyWithStatus(401, 'You are not authorized to perform this action');
+        return ($listing->owner_id == $user->id || $user->is_admin) && !$listing->deleted_at   ? Response::allow() : Response::denyWithStatus(401, 'You are not authorized to perform this action');
     }
 
     /**
@@ -58,7 +58,7 @@ class ListingPolicy
      */
     public function restore(User $user, Listing $listing): Response
     {
-        return $listing->owner_id == $user->id || $user->is_admin   ? Response::allow() : Response::denyWithStatus(401, 'You are not authorized to perform this action');
+        return ($listing->owner_id == $user->id || $user->is_admin ) && $listing->deleted_at  ? Response::allow() : Response::denyWithStatus(401, 'You are not authorized to perform this action');
     }
 
     /**
