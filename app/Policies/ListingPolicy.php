@@ -11,6 +11,11 @@ class ListingPolicy
     /**
      * Determine whether the user can view any models.
      */
+
+//    public function before(?User $user, $ability) {
+//        return $user->is_admin && $ability === 'update';
+//    }
+
     public function viewAny(User $user): bool
     {
         return true;

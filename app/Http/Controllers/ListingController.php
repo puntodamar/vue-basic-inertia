@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ListingRequest;
 use App\Models\Listing;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 
@@ -11,9 +12,16 @@ use Illuminate\Support\Facades\Gate;
 class ListingController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
-        return inertia("Listing/Index", ["listings" => Listing::with('owner:id,name')->latest()->paginate(15)]);
+        $allowed = ['priceFrom', 'priceTo', 'beds', 'baths', 'areaFrom', 'areaTo'];
+        $listings =  Listing::with('owner:id,name')->latest()
+            ->filter($request->only($allowed))->paginate(5)->withQueryString();
+
+        return inertia("Listing/Index", [
+            "listings" => $listings,
+            "filters" => $request->only($allowed),
+        ]);
     }
 
     /**

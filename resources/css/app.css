@@ -21,8 +21,20 @@
         @apply mt-1 text-white bg-indigo-500 p-2 rounded-md
     }
 
+    .btn-normal {
+        @apply mt-1 text-white bg-gray-500 p-2 rounded-md
+    }
+
     .input-error {
         @apply text-sm text-red-500 dark:text-red-400;
+    }
+
+    .input-filter-l {
+        @apply placeholder:text-gray-400 dark:placeholder:text-gray-600 border  border-gray-200 dark:border-gray-700 rounded-t-md rounded-l-md rounded-b-none rounded-r-none text-sm font-medium text-gray-600 dark:text-gray-400 dark:bg-gray-800
+    }
+
+    .input-filter-r {
+        @apply placeholder:text-gray-400 dark:placeholder:text-gray-600 border border-l-0  border-gray-200 dark:border-gray-700 rounded-t-md rounded-l-none rounded-b-none rounded-r-md text-sm font-medium text-gray-600 dark:text-gray-400 dark:bg-gray-800
     }
 
     .form-label-error {
@@ -32,6 +44,17 @@
     .input-field-error {
         @apply w-full border bg-transparent text-inherit rounded px-2 py-1;
         @apply border-red-500 dark:border-red-400; /* default light mode */
+    }
+
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    /* Firefox */
+    input[type=number] {
+        -moz-appearance: textfield;
     }
 }
 

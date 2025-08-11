@@ -18,6 +18,8 @@
         message: {type: String}
     })
 
+
+
     defineOptions({
         layout: MainLayout
     })
