@@ -24,7 +24,7 @@
                         <the-link v-else :href="route('realtors.listings.restore', list.id)" method="put" class="btn-outline text-xs font-medium">Restore</the-link>
                     </div>
                     <div class="flex items-center">
-                        <the-link :href="route('realtors.listings.image.create', list.id)" class="btn-outline text-xs font-medium w-full text-center">Images</the-link>
+                        <the-link :href="route('realtors.listings.image.create', list.id)" class="btn-outline text-xs font-medium w-full text-center">{{imageCounter(list)}}</the-link>
                     </div>
 
                 </div>
@@ -61,6 +61,14 @@
     const props = defineProps({
         listings: Object,
     })
+
+    const imageCounter = (list) => {
+        if (list.images_count > 0) {
+            return "Images (" + list.images_count + ")";
+        } else {
+            return "Images"
+        }
+    }
 
     const filterChanged = (filter) => {
         console.log(filter)

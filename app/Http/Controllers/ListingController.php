@@ -14,9 +14,14 @@ class ListingController extends Controller
 
     public function index(Request $request)
     {
+        
         $allowed = ['priceFrom', 'priceTo', 'beds', 'baths', 'areaFrom', 'areaTo'];
-        $listings =  Listing::with('owner:id,name')->latest()
-            ->filter($request->only($allowed))->paginate(5)->withQueryString();
+        $listings = Listing::with('owner:id,name')
+            ->latest()
+            ->filter($request->only($allowed))
+            ->paginate(5)
+            ->withQueryString();
+
 
 
         return inertia("Listing/Index", [
