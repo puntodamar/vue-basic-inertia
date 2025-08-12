@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ListingController;
 use App\Http\Controllers\RealtorListingController;
+use App\Http\Controllers\RealtorListingImageController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\IndexController;
@@ -34,6 +35,8 @@ Route::middleware(['custom.auth:user'])->group(function () {
     Route::prefix('realtors')->name('realtors.')->group(function () {
         Route::put('/{listing}/restore', [RealtorListingController::class, 'restore'])
             ->name('listings.restore')->withTrashed();
+
+        Route::resource('listings.image', RealtorListingImageController::class)->only(['create', 'store']);
     });
 
     Route::get('my-listings', [RealtorListingController::class, 'index'])->name('my-listings');

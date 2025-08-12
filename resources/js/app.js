@@ -4,6 +4,14 @@ import MainLayout from "./Layouts/MainLayout.vue";
 import {ZiggyVue } from 'ziggy-js';
 import {Link} from "@inertiajs/vue3"
 import {store} from './vuex.js';
+import axios from "axios";
+
+axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
+
+const token = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content')
+if (token) {
+    axios.defaults.headers.common['X-CSRF-TOKEN'] = token
+}
 
 createInertiaApp({
     resolve: async name => {

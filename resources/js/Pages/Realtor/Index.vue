@@ -23,10 +23,18 @@
                         <the-link v-if="!list.deleted_at" :href="route('listings.destroy', list.id)" method="delete" class="btn-outline text-xs font-medium">Delete</the-link>
                         <the-link v-else :href="route('realtors.listings.restore', list.id)" method="put" class="btn-outline text-xs font-medium">Restore</the-link>
                     </div>
+                    <div class="flex items-center">
+                        <the-link :href="route('realtors.listings.image.create', list.id)" class="btn-outline text-xs font-medium w-full text-center">Images</the-link>
+                    </div>
+
                 </div>
             </div>
+
+
         </the-box>
     </section>
+
+
     <div v-if="props.listings.data.length" class="w-full flex justify-center mt-4 mb-4" >
         <pagination :links="props.listings.links"></pagination>
     </div>
