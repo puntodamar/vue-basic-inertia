@@ -16,9 +16,7 @@ class RealtorListingImageController extends Controller
     }
 
     public function store(Listing $listing, StoreListingImagesRequest $request) {
-        if (!$request->validated()) {
-            return back()->withErrors(['image' => 'Invalid image format.']);
-        }
+        $request->validated();
 
         if($request->hasFile('images')) {
             foreach($request->file('images') as $image) {

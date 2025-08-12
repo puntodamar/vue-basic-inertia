@@ -42,6 +42,11 @@ class HandleInertiaRequests extends Middleware
                 'success' =>$request->session()->get('success'),
                 'error' =>$request->session()->get('error'),
             ],
+            'errors' => function () use ($request) {
+                return $request->session()->get('errors')
+                    ? $request->session()->get('errors')->getBag('default')->getMessages()
+                    : (object) [];
+            },
             'user' => Auth::check() ? [
                 'id' => Auth::user()->id,
                 'name' => Auth::user()->name,
