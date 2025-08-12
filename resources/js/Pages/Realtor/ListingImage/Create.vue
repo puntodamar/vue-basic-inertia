@@ -26,13 +26,31 @@
             <button type="reset" class="btn btn-outline ml-2 disabled:opacity-25" @click="reset" :disabled="!canUpload" >Reset</button>
         </form>
     </the-box>
+
+    <the-box class="mt-4" v-if="listing.images.length > 0">
+        <template #header>Images</template>
+        <section class="mt-4 grid grid-cols-3 gap-4">
+            <div v-for="img in listing.images" :key="img.id">
+                <div class="grid grid-rows-2 justify-items-center items-start">
+                    <img :src="img.src" alt="">
+                    <the-link
+                        :href="route('realtors.listings.image.destroy', {listing: listing.id, image: img.id})"
+                        class="btn btn-danger w-full text-sm"
+                        method="delete">
+                        Delete
+                    </the-link>
+                </div>
+
+            </div>
+        </section>
+    </the-box>
 </template>
 
 <script setup>
     import {route} from "ziggy-js";
     import FlashMessage from "../../../Components/UI/FlashMessage.vue";
     import TheBox from "../../../Components/UI/TheBox.vue";
-    import {useForm} from "@inertiajs/vue3";
+    import {Link as TheLink, useForm} from "@inertiajs/vue3";
     import {computed, ref} from "vue";
     import {Inertia} from "@inertiajs/inertia";
     import NProgress from "lodash";
@@ -46,8 +64,7 @@
 
     const inputImage = ref(null)
 
-    const canUpload = computed(() => form.images.length !== 0 && props.listing.images_count < 5)
-    console.log(form.images.length === 0)
+    const canUpload = computed(() => form.images.length !== 0 && props.listing.images.length < 5)
 
     Inertia.on('progress', (event) => {
         if(event.detail.progress.percentage) {
@@ -82,24 +99,24 @@
     }
 
 
-    let fakePercent = 0
-    const interval = setInterval(() => {
-        fakePercent += 10
-
-        document.dispatchEvent(
-            new CustomEvent('inertia:progress', {
-                detail: {
-                    progress: {
-                        percentage: fakePercent
-                    }
-                }
-            })
-        )
-
-        if (fakePercent >= 100) {
-            clearInterval(interval)
-        }
-        console.log(fakePercent)
-    }, 200)
+    // let fakePercent = 0
+    // const interval = setInterval(() => {
+    //     fakePercent += 10
+    //
+    //     document.dispatchEvent(
+    //         new CustomEvent('inertia:progress', {
+    //             detail: {
+    //                 progress: {
+    //                     percentage: fakePercent
+    //                 }
+    //             }
+    //         })
+    //     )
+    //
+    //     if (fakePercent >= 100) {
+    //         clearInterval(interval)
+    //     }
+    //     console.log(fakePercent)
+    // }, 200)
 
 </script>

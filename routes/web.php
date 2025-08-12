@@ -37,6 +37,7 @@ Route::middleware(['custom.auth:user'])->group(function () {
             ->name('listings.restore')->withTrashed();
 
         Route::resource('listings.image', RealtorListingImageController::class)->only(['create', 'store']);
+        Route::delete('/{listing}/{image}/delete', [RealtorListingImageController::class, 'destroy'])->name('listings.image.destroy');
     });
 
     Route::get('my-listings', [RealtorListingController::class, 'index'])->name('my-listings');
