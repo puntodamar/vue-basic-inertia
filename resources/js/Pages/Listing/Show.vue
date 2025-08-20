@@ -69,6 +69,8 @@
                         <div>Total Interest</div>
                         <div><the-price :price="totalInterest"></the-price></div>
                     </div>
+
+                    <make-offer v-if="page.props.user" :listing-id="listing.id" :price="listing.price"></make-offer>
                 </div>
             </the-box>
         </div>
@@ -86,6 +88,8 @@
     import {ref} from "vue";
     import {useMonthlyPayment} from "../../Composables/useMonthlyPayment";
     import FlashMessage from "../../Components/UI/FlashMessage.vue";
+    import MakeOffer from "./Show/Components/MakeOffer.vue";
+    import {usePage} from "@inertiajs/vue3";
     const props = defineProps(['listing'])
 
     const interestRate = ref(2.5)
@@ -93,5 +97,6 @@
 
     const {monthlyPayment, totalPaid, totalInterest} = useMonthlyPayment(props.listing.price, interestRate, duration)
 
+    const page = usePage()
 
 </script>

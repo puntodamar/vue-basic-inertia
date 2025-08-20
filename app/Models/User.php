@@ -28,6 +28,10 @@ class User extends Authenticatable
           // list any extra pivot cols here
     }
 
+    public function offers(): HasMany {
+        return $this->hasMany(Offer::class);
+    }
+
 
     /**
      * The attributes that are mass assignable.

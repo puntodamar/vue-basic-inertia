@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ListingController;
 use App\Http\Controllers\RealtorListingController;
 use App\Http\Controllers\RealtorListingImageController;
+use App\Http\Controllers\RealtorListingOfferController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\IndexController;
@@ -25,7 +26,7 @@ Route::middleware(['custom.auth:user'])->group(function () {
         Route::patch('/{listing}', [ListingController::class, 'update'])
             ->name('update');
 
-
+        Route::resource("{listing}/offers", RealtorListingOfferController::class)->only('store');
     });
 
 
@@ -39,6 +40,8 @@ Route::middleware(['custom.auth:user'])->group(function () {
         Route::resource('listings.image', RealtorListingImageController::class)->only(['create', 'store']);
         Route::delete('/{listing}/{image}/delete', [RealtorListingImageController::class, 'destroy'])->name('listings.image.destroy');
     });
+
+
 
     Route::get('my-listings', [RealtorListingController::class, 'index'])->name('my-listings');
 });

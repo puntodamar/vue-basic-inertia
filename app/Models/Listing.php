@@ -25,6 +25,10 @@ class Listing extends Model
         );
     }
 
+    public function offers(): HasMany {
+        return $this->hasMany(Offer::class);
+    }
+
     public function images(): HasMany {
         return $this->hasMany(ListingImage::class);
     }
@@ -35,7 +39,7 @@ class Listing extends Model
     ];
 
     public function scopeIsDeleted(Builder $query): bool {
-
+        return false;
     }
 
     public function scopeFilter($query, array $filters) {
